@@ -12,6 +12,7 @@ async function main() {
     const { kind, paths } = event;
     const srcPath = path.normalize(paths[0]);
 
+    if (path.basename(srcPath) === '.DS_Store') continue;
     if (processing.has(srcPath)) continue;
     processing.add(srcPath);
 
@@ -21,15 +22,10 @@ async function main() {
       const isStrayFile = extname.length === 0;
       const destFolder = isStrayFile ? 'stray' : extname.substring(1);
       const destPath = path.join(config.cleanFolder, destFolder, filename);
-      await ensureDir(destPath);
+      await ensureDir(path.join(config.cleanFolder, destFolder));
 
       try {
         await copyFile(srcPath, destPath);
-      } catch {
-        // do nothing for now... idk
-      }
-
-      try {
         await remove(srcPath);
       } catch (err) {
         logger.info(err);
