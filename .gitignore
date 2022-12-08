@@ -3,6 +3,7 @@
 *.swp
 .env
 **/*.log
+config.json
 
 /.cargo_home/
 /.idea/
