@@ -1,11 +1,12 @@
 import config from './config.json' assert { type: 'json' };
 import { ensureDir, path } from './deps.ts';
-import { logger } from './logger.ts';
+import Logger from './logger.ts';
 const { watchFs, copyFile, remove } = Deno;
 
 async function main() {
   const processing = new Set(); // keep track of on-going moves
   const watcher = watchFs(config.dirtyFolder);
+  const logger = Logger.getLogger()
 
   for await (const event of watcher) {
     logger.info(event);

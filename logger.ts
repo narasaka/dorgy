@@ -16,4 +16,5 @@ log.setup({
   },
 });
 
-export const logger = log.getLogger();
+
+export default log;
